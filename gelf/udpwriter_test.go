@@ -190,7 +190,7 @@ func TestExtraData(t *testing.T) {
 		Host:     "fake-host",
 		Short:    string(short),
 		Full:     string(full),
-		TimeUnix: float64(time.Now().Unix()),
+		TimeUnix: float64(time.Now().UnixNano()) / float64(time.Second),
 		Level:    6, // info
 		Facility: "udpwriter_test",
 		Extra:    extra,
@@ -254,7 +254,7 @@ func BenchmarkWriteBestSpeed(b *testing.B) {
 			Host:     w.hostname,
 			Short:    "short message",
 			Full:     "full message",
-			TimeUnix: float64(time.Now().Unix()),
+			TimeUnix: float64(time.Now().UnixNano()) / float64(time.Second),
 			Level:    6, // info
 			Facility: w.Facility,
 			Extra:    map[string]interface{}{"_file": "1234", "_line": "3456"},
@@ -280,7 +280,7 @@ func BenchmarkWriteNoCompression(b *testing.B) {
 			Host:     w.hostname,
 			Short:    "short message",
 			Full:     "full message",
-			TimeUnix: float64(time.Now().Unix()),
+			TimeUnix: float64(time.Now().UnixNano()) / float64(time.Second),
 			Level:    6, // info
 			Facility: w.Facility,
 			Extra:    map[string]interface{}{"_file": "1234", "_line": "3456"},
@@ -306,7 +306,7 @@ func BenchmarkWriteDisableCompressionCompletely(b *testing.B) {
 			Host:     w.hostname,
 			Short:    "short message",
 			Full:     "full message",
-			TimeUnix: float64(time.Now().Unix()),
+			TimeUnix: float64(time.Now().UnixNano()) / float64(time.Second),
 			Level:    6, // info
 			Facility: w.Facility,
 			Extra:    map[string]interface{}{"_file": "1234", "_line": "3456"},
@@ -332,7 +332,7 @@ func BenchmarkWriteDisableCompressionAndPreencodeExtra(b *testing.B) {
 			Host:     w.hostname,
 			Short:    "short message",
 			Full:     "full message",
-			TimeUnix: float64(time.Now().Unix()),
+			TimeUnix: float64(time.Now().UnixNano()) / float64(time.Second),
 			Level:    6, // info
 			Facility: w.Facility,
 			RawExtra: json.RawMessage(`{"_file":"1234","_line": "3456"}`),
