@@ -75,9 +75,12 @@ func (w *TLSWriter) writeToSocketWithReconnectAttempts(zBytes []byte) (n int, er
 			time.Sleep(w.ReconnectDelay)
 		}
 		if w.conn == nil {
-			w.conn, err = tls.Dial("tcp", w.addr, w.TlsConfig)
+			conn, err := tls.Dial("tcp", w.addr, w.TlsConfig)
 			if err != nil {
 				err = fmt.Errorf("failed to connect: %v", err)
+				w.conn = nil
+			} else {
+				w.conn = conn
 			}
 		}
 		if w.conn != nil {
